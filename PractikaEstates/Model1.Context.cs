@@ -15,11 +15,18 @@ namespace PractikaEstates
     
     public partial class EstateEntities : DbContext
     {
+        private static EstateEntities _context;
         public EstateEntities()
             : base("name=EstateEntities")
         {
         }
     
+        public static EstateEntities GetContext()
+        {
+            if(_context == null)
+                _context = new EstateEntities();
+            return _context;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

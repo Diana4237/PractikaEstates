@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,26 @@ namespace PractikaEstates
         public MainWindow()
         {
             InitializeComponent();
+            Clients.ItemsSource=EstateEntities.GetContext().Client.ToList();
+        }
+        void StrEdit(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Clients.SelectedItem;
+            var client = (Client)selectedItem;
+            using (EstateEntities context = new EstateEntities())
+            {
+                var entity = context.Client.Find(client.Id_client);
+
+                EditClient editClient = new EditClient(entity);
+                editClient.Show();
+
+            }
+            
+        }
+        void AddClient(object sender, RoutedEventArgs e)
+        {
+            EditClient editClient = new EditClient();
+            editClient.Show();
         }
     }
 }
