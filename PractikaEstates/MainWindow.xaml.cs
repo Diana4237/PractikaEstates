@@ -23,10 +23,11 @@ namespace PractikaEstates
     public partial class MainWindow : Window
     {
         private int threshold = 3;
+        private Client _currentStudent = new Client();
         public MainWindow()
         {
             InitializeComponent();
-            
+            DataContext = _currentStudent;
             Clients.ItemsSource=EstateEntities.GetContext().Client.ToList();  
             SearchText.TextChanged += TextboxChange;
         }
@@ -113,17 +114,19 @@ namespace PractikaEstates
         }
         void StrEdit(object sender, RoutedEventArgs e)
         {
-            var selectedItem = Clients.SelectedItem;
-            var client = (Client)selectedItem;
-            using (EstateEntities context = new EstateEntities())
-            {
-                var entity = context.Client.Find(client.Id_client);
-                EditClient editClient = new EditClient(entity);
-                editClient.Show();
-                this.Close();
+            //var selectedItem = Clients.SelectedItem;
+            //var client = (Client)selectedItem;
+            //using (EstateEntities context = new EstateEntities())
+            //{
+            //    var entity = context.Client.Find(client.Id_client);
+            //    EditClient editClient = new EditClient(entity);
+            //    editClient.Show();
+            //    this.Close();
 
-            }
-            
+            //}
+            var item = (Client)Clients.SelectedItem; new EditClient(item).Show();
+            Close();
+
         }
         void AddClient(object sender, RoutedEventArgs e)
         {

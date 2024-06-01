@@ -20,21 +20,21 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="Имя" Grid.Column="0" Grid.Row="0"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="0" Name="first"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="0" Name="first" Text="{Binding FirstName}"/>
 
 
         <TextBlock Text="Фамилия" Grid.Column="0" Grid.Row="1"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="1" Name="last"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="1" Name="last" Text="{Binding LastName}"/>
 
         <TextBlock Text="Отчество" Grid.Column="0" Grid.Row="2"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="2" Name="patronym"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="2" Name="patronym" Text="{Binding Patronymic}"/>
 
         <TextBlock Text="Телефон" Grid.Column="0" Grid.Row="3"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="3" Name="phone"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="3" Name="phone" Text="{Binding Telephone}"/>
 
 
         <TextBlock Text="Почта" Grid.Column="0" Grid.Row="4"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="4" Name="Mail"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="4" Name="Mail" Text="{Binding Mail}"/>
         <Button Content="Добавить" Grid.Column="1" Grid.Row="5" Width="100"  Margin="10" Visibility="Hidden" Name="Add" Click="AddCl"/>
         <Button Content="Сохранить" Grid.Column="1" Grid.Row="5" Width="100"  Margin="10" Visibility="Hidden" Name="Edit" Click="EditCl"/>
     </Grid>

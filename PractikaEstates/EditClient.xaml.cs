@@ -21,6 +21,7 @@ namespace PractikaEstates
     public partial class EditClient : Window
     {
         int IdCl;
+        private Client _currentClient = new Client();
         public EditClient()
         {
             InitializeComponent();
@@ -39,40 +40,46 @@ namespace PractikaEstates
                 Mail.Text =entity.Mail;
             }
             Edit.Visibility = Visibility.Visible;
+            if (entity == null) return;
+            _currentClient = entity;
+            DataContext = _currentClient;
         }
        private void EditCl(object sender, RoutedEventArgs e)
         {
-            using (EstateEntities context = new EstateEntities())
-            {
-                var entity = context.Client.Find(IdCl);
-                entity.FirstName = first.Text;
-                entity.LastName = last.Text;
-                entity.Patronymic = patronym.Text;
-                entity.Telephone = phone.Text;
-                entity.Mail = Mail.Text;
-                context.SaveChanges();
-               
-               
-            }
+            //using (EstateEntities context = new EstateEntities())
+            //{
+            //    var entity = context.Client.Find(IdCl);
+            //    entity.FirstName = first.Text;
+            //    entity.LastName = last.Text;
+            //    entity.Patronymic = patronym.Text;
+            //    entity.Telephone = phone.Text;
+            //    entity.Mail = Mail.Text;
+            //    context.SaveChanges();
+
+
+            //}
             EstateEntities.GetContext().SaveChanges();
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(5); // Задержка в 2 секунды
-            timer.Tick += (sender1, e1) =>
-            {
-                // Открыть окно здесь
+            new MainWindow().Show();
+            Close();
+            //EstateEntities.GetContext().SaveChanges();
+            //DispatcherTimer timer = new DispatcherTimer();
+            //timer.Interval = TimeSpan.FromSeconds(2); // Задержка в 2 секунды
+            //timer.Tick += (sender1, e1) =>
+            //{
+            //    // Открыть окно здесь
               
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
+            //    MainWindow mainWindow = new MainWindow();
+            //    mainWindow.Show();
              
 
-                // Остановить таймер после открытия окна
-                timer.Stop();
-            };
+            //    // Остановить таймер после открытия окна
+            //    timer.Stop();
+            //};
 
-            timer.Start();
+            //timer.Start();
 
-            //MainWindow mainWindow = new MainWindow();
-            //mainWindow.Show();
+            ////MainWindow mainWindow = new MainWindow();
+            ////mainWindow.Show();
         }
        
         private void AddCl(object sender, RoutedEventArgs e)
