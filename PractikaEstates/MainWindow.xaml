@@ -8,10 +8,20 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <DataGrid Name="Clients" AutoGenerateColumns="False" IsReadOnly="True">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="4" Name="SearchText" GotFocus="got" LostFocus="lost"/>
+            <Button Grid.Column="1" HorizontalAlignment="Stretch" Content="Назад"/>
+        </Grid>
+        <DataGrid Name="Clients" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
@@ -28,7 +38,7 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Content="Добавить" Name="Add" Click="AddClient"  Grid.Row="1" HorizontalAlignment="Left" Height="20" Width="100"/>
-        <Button Content="Удалить" Name="Del" Click="DelClient" Grid.Row="1" HorizontalAlignment="Right" Height="20" Width="100"/>
+        <Button Content="Добавить" Name="Add" Click="AddClient"  Grid.Row="2" HorizontalAlignment="Left" Height="20" Width="100"/>
+        <Button Content="Удалить" Name="Del" Click="DelClient" Grid.Row="2" HorizontalAlignment="Right" Height="20" Width="100"/>
     </Grid>
 </Window>
