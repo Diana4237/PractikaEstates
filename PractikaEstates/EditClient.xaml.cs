@@ -43,18 +43,37 @@ namespace PractikaEstates
         {
             using (EstateEntities context = new EstateEntities())
             {
-                // Найти сущность в контексте базы данных по первичному ключу
                 var entity = context.Client.Find(IdCl);
-
-                // Изменить значения свойств сущности
                 entity.FirstName = first.Text;
                 entity.LastName = last.Text;
                 entity.Patronymic = patronym.Text;
                 entity.Telephone = phone.Text;
                 entity.Mail = Mail.Text;
-
-                // Сохранить изменения в базе данных
                 context.SaveChanges();
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
+        }
+        private void AddCl(object sender, RoutedEventArgs e)
+        {
+            using (EstateEntities context = new EstateEntities())
+            {
+                if (phone.Text!=null || Mail.Text!=null) { 
+                Client entity = new Client
+                {
+                    FirstName = first.Text,
+                    LastName = last.Text,
+                    Patronymic = patronym.Text,
+                    Telephone = phone.Text,
+                    Mail = Mail.Text
+                };
+                context.Client.Add(entity);
+                context.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("У клиента не указаны контактные данные");
+                }
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
             }

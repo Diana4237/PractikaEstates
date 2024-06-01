@@ -45,5 +45,30 @@ namespace PractikaEstates
             EditClient editClient = new EditClient();
             editClient.Show();
         }
-    }
+        void DelClient(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Clients.SelectedItem;
+            var client = (Client)selectedItem;
+            using (EstateEntities context = new EstateEntities())
+            {
+
+                var entity = context.Client.Find(client.Id_client);
+                if (entity != null)
+                {
+                    var demandForClient = context.Demand.FirstOrDefault(d => d.Id_client == entity.Id_client);
+                    var supplyForClient = context.Supplies.FirstOrDefault(d => d.Id_client == entity.Id_client);
+                    if (demandForClient == null || supplyForClient == null)
+                    {
+                        context.Client.Remove(entity);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Невозможно удалить клиента, он связан с потребностью или предложением");
+                    }
+                }
+            }
+            }
+
+        }
 }
