@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PractikaEstates
 {
@@ -50,10 +51,30 @@ namespace PractikaEstates
                 entity.Telephone = phone.Text;
                 entity.Mail = Mail.Text;
                 context.SaveChanges();
+               
+               
+            }
+            EstateEntities.GetContext().SaveChanges();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(5); // Задержка в 2 секунды
+            timer.Tick += (sender1, e1) =>
+            {
+                // Открыть окно здесь
+              
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
-            }
+             
+
+                // Остановить таймер после открытия окна
+                timer.Stop();
+            };
+
+            timer.Start();
+
+            //MainWindow mainWindow = new MainWindow();
+            //mainWindow.Show();
         }
+       
         private void AddCl(object sender, RoutedEventArgs e)
         {
             using (EstateEntities context = new EstateEntities())
@@ -74,6 +95,7 @@ namespace PractikaEstates
                 {
                     MessageBox.Show("У клиента не указаны контактные данные");
                 }
+                this.Close();
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
             }

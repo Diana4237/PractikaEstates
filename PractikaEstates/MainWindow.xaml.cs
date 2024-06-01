@@ -26,9 +26,11 @@ namespace PractikaEstates
         public MainWindow()
         {
             InitializeComponent();
-            Clients.ItemsSource=EstateEntities.GetContext().Client.ToList();
+            
+            Clients.ItemsSource=EstateEntities.GetContext().Client.ToList();  
             SearchText.TextChanged += TextboxChange;
         }
+      
         void TextboxChange(object sender, TextChangedEventArgs e)
         {
             if(SearchText.Text != null && SearchText.Text != "") { 
@@ -116,9 +118,9 @@ namespace PractikaEstates
             using (EstateEntities context = new EstateEntities())
             {
                 var entity = context.Client.Find(client.Id_client);
-
                 EditClient editClient = new EditClient(entity);
                 editClient.Show();
+                this.Close();
 
             }
             
@@ -128,6 +130,7 @@ namespace PractikaEstates
             EditClient editClient = new EditClient();
             editClient.Show();
         }
+
         void DelClient(object sender, RoutedEventArgs e)
         {
             var selectedItem = Clients.SelectedItem;
@@ -151,6 +154,8 @@ namespace PractikaEstates
                     }
                 }
             }
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             }
 
         }

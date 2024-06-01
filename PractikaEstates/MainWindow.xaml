@@ -39,6 +39,7 @@
 
         </DataGrid>
         <Button Content="Добавить" Name="Add" Click="AddClient"  Grid.Row="2" HorizontalAlignment="Left" Height="20" Width="100"/>
+       
         <Button Content="Удалить" Name="Del" Click="DelClient" Grid.Row="2" HorizontalAlignment="Right" Height="20" Width="100"/>
     </Grid>
 </Window>
