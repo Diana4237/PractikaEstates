@@ -1,11 +1,11 @@
-﻿<Window x:Class="PractikaEstates.MainWindow"
+﻿<Window x:Class="PractikaEstates.Agents"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PractikaEstates"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Agents" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -14,8 +14,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header="Клиенты" IsCheckable="False" />
-            <MenuItem Header="Риэлторы" Click="AgentClick"/>
+            <MenuItem Header="Клиенты" Click="ClientClick" />
+            <MenuItem Header="Риэлторы" />
             <MenuItem Header="Объекты недвижимости" Click="EstateClick"/>
         </Menu>
         <Grid Grid.Row="1">
@@ -27,13 +27,12 @@
             <TextBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="4" Name="SearchText" GotFocus="got" LostFocus="lost"/>
             <Button Grid.Column="1" HorizontalAlignment="Stretch" Content="Назад"/>
         </Grid>
-        <DataGrid Name="Clients" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="2">
+        <DataGrid Name="AgentGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
                 <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
-                <DataGridTextColumn Header="Телефон" Binding="{Binding Telephone}"/>
-                <DataGridTextColumn Header="Почта" Binding="{Binding Mail}"/>
+                <DataGridTextColumn Header="Доля коммисии" Binding="{Binding DealShare}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -45,7 +44,7 @@
 
         </DataGrid>
         <Button Content="Добавить" Name="Add" Click="AddClient"  Grid.Row="3" HorizontalAlignment="Left" Height="20" Width="100"/>
-       
+
         <Button Content="Удалить" Name="Del" Click="DelClient" Grid.Row="3" HorizontalAlignment="Right" Height="20" Width="100"/>
     </Grid>
 </Window>

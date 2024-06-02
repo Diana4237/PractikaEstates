@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,58 +10,57 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PractikaEstates
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Agents.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Agents : Window
     {
         private int threshold = 3;
-        private Client _currentStudent = new Client();
-        public MainWindow()
+        private Agent _currentStudent = new Agent();
+        public Agents()
         {
             InitializeComponent();
             DataContext = _currentStudent;
-            Clients.ItemsSource=EstateEntities.GetContext().Client.ToList();  
+            AgentGrid.ItemsSource = EstateEntities.GetContext().Agent.ToList();
             SearchText.TextChanged += TextboxChange;
         }
-      
         void TextboxChange(object sender, TextChangedEventArgs e)
         {
-            if(SearchText.Text != null && SearchText.Text != "") { 
-            string inputName = SearchText.Text;
-            List<string> matches = FuzzySearch(inputName);
-            List<Client> clients = new List<Client>();
-            foreach(string name in matches)
-            { 
-                using (EstateEntities context = new EstateEntities())
+            if (SearchText.Text != null && SearchText.Text != "")
+            {
+                string inputName = SearchText.Text;
+                List<string> matches = FuzzySearch(inputName);
+                List<Agent> clients = new List<Agent>();
+                foreach (string name in matches)
                 {
-                clients = context.Client.Where(c => c.FirstName == name).ToList();
+                    using (EstateEntities context = new EstateEntities())
+                    {
+                        clients = context.Agent.Where(c => c.FirstName == name).ToList();
+                    }
                 }
+                AgentGrid.ItemsSource = clients;
             }
-            Clients.ItemsSource = clients;
-            }
-            else 
+            else
             {
                 SearchText.Text = null;
             }
-            
+
         }
         void got(object sender, RoutedEventArgs e)
         {
-            if(SearchText.Text != null)
+            if (SearchText.Text != null)
             {
             }
         }
         void lost(object sender, RoutedEventArgs e)
         {
-            if (SearchText.Text == null || SearchText.Text =="")
+            if (SearchText.Text == null || SearchText.Text == "")
             {
-                Clients.ItemsSource = EstateEntities.GetContext().Client.ToList();
+                AgentGrid.ItemsSource = EstateEntities.GetContext().Agent.ToList();
             }
             else
             {
@@ -76,8 +73,8 @@ namespace PractikaEstates
             List<string> results = new List<string>();
             List<string> FIOClients = new List<string>();
             using (EstateEntities context = new EstateEntities())
-            { 
-                foreach(Client cl in context.Client)
+            {
+                foreach (Agent cl in context.Agent)
                 {
                     FIOClients.Add(cl.FirstName);
                 }
@@ -118,15 +115,14 @@ namespace PractikaEstates
         }
         void StrEdit(object sender, RoutedEventArgs e)
         {
-            var item = (Client)Clients.SelectedItem; new EditClient(item).Show();
+            var item = (Agent)AgentGrid.SelectedItem; new EditAgent(item).Show();
             Close();
 
         }
-        void AgentClick(object sender, RoutedEventArgs e)
+        void ClientClick(object sender, RoutedEventArgs e)
         {
-            
-            Agents agents = new Agents();
-            agents.Show();
+            MainWindow clients = new MainWindow();
+            clients.Show();
             this.Close();
         }
         void EstateClick(object sender, RoutedEventArgs e)
@@ -137,36 +133,37 @@ namespace PractikaEstates
         }
         void AddClient(object sender, RoutedEventArgs e)
         {
-            EditClient editClient = new EditClient();
+            EditAgent editClient = new EditAgent();
             editClient.Show();
         }
 
         void DelClient(object sender, RoutedEventArgs e)
         {
-            var selectedItem = Clients.SelectedItem;
-            var client = (Client)selectedItem;
+            var selectedItem = AgentGrid.SelectedItem;
+            var client = (Agent)selectedItem;
             using (EstateEntities context = new EstateEntities())
             {
 
-                var entity = context.Client.Find(client.Id_client);
+                var entity = context.Agent.Find(client.Id_agent);
                 if (entity != null)
                 {
-                    var demandForClient = context.Demand.FirstOrDefault(d => d.Id_client == entity.Id_client);
-                    var supplyForClient = context.Supplies.FirstOrDefault(d => d.Id_client == entity.Id_client);
+                    var demandForClient = context.Demand.FirstOrDefault(d => d.Id_agent == entity.Id_agent);
+                    var supplyForClient = context.Supplies.FirstOrDefault(d => d.Id_agent == entity.Id_agent);
                     if (demandForClient == null || supplyForClient == null)
                     {
-                        context.Client.Remove(entity);
+                        context.Agent.Remove(entity);
                         context.SaveChanges();
                     }
                     else
                     {
-                        MessageBox.Show("Невозможно удалить клиента, он связан с потребностью или предложением");
+                        MessageBox.Show("Невозможно удалить агента, он связан с потребностью или предложением");
                     }
                 }
             }
-            MainWindow mainWindow = new MainWindow();
+            Agents mainWindow = new Agents();
             mainWindow.Show();
-            }
-
         }
+
+    }
 }
+
