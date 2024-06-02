@@ -131,7 +131,7 @@ namespace PractikaEstates
         }
         void EstateClick(object sender, RoutedEventArgs e)
         {
-            Agents agents = new Agents();
+            Estates agents = new Estates();
             agents.Show();
             this.Close();
         }
