@@ -48,7 +48,6 @@ namespace PractikaEstates
             {
                 SearchText.Text = null;
             }
-
         }
         void got(object sender, RoutedEventArgs e)
         {
@@ -67,7 +66,6 @@ namespace PractikaEstates
                 MessageBox.Show("Очистите поле ввода");
             }
         }
-
         private List<string> FuzzySearch(string inputName)
         {
             List<string> results = new List<string>();
@@ -110,7 +108,6 @@ namespace PractikaEstates
                     d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
                 }
             }
-
             return d[n, m];
         }
         void StrEdit(object sender, RoutedEventArgs e)
@@ -136,7 +133,6 @@ namespace PractikaEstates
             EditAgent editClient = new EditAgent();
             editClient.Show();
         }
-
         void DelClient(object sender, RoutedEventArgs e)
         {
             var selectedItem = AgentGrid.SelectedItem;

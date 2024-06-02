@@ -49,7 +49,6 @@ namespace PractikaEstates
             new Agents().Show();
             Close();
         }
-
         private void AddAg(object sender, RoutedEventArgs e)
         {
             using (EstateEntities context = new EstateEntities())
