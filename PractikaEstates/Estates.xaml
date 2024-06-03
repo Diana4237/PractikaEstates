@@ -57,24 +57,33 @@
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="0.9*"/>
+                <!--<ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.9*"/>-->
             </Grid.ColumnDefinitions>
             <DataGrid Name="EstateGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="0" >
-                <DataGrid.Resources>
+                <!--<DataGrid.Resources>
                     <Style TargetType="ScrollViewer">
                         <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
                         <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
                     </Style>
-                </DataGrid.Resources>
+                </DataGrid.Resources>-->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Город" Binding="{Binding City}"/>
                     <DataGridTextColumn Header="Улица" Binding="{Binding Street}"/>
                     <DataGridTextColumn Header="Номер дома" Binding="{Binding Number_home}"/>
                     <DataGridTextColumn Header="Номер квартиры" Binding="{Binding Number_flat}"/>
+                    <DataGridTextColumn Header="Район" Binding="{Binding District.NameDist}"/>
+                    <DataGridTextColumn Header="Район" Binding="{Binding TypeOfEstate.Name}"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Изменить" Name="Edit" Click="StrEdit"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid Name="DistrictGrid" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True">
+            <!--<DataGrid Name="DistrictGrid" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Resources>
                     <Style TargetType="ScrollViewer">
                         <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
@@ -88,18 +97,12 @@
             <DataGrid Name="TypeGrid" Grid.Column="2" AutoGenerateColumns="False" IsReadOnly="True" ScrollViewer.ScrollChanged="EstateGrid_ScrollChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Тип недвижимости" Binding="{Binding}"/>
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Изменить" Name="Edit" Click="StrEdit"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                  
                 </DataGrid.Columns>
-            </DataGrid>
+            </DataGrid>-->
         </Grid>
-        <Button Content="Добавить" Name="Add" Grid.Row="3" HorizontalAlignment="Left" Height="20" Width="100"/>
+        <Button Content="Добавить" Name="Add" Grid.Row="3" HorizontalAlignment="Left" Height="20" Width="100" Click="AddEs"/>
 
-        <Button Content="Удалить" Name="Del" Grid.Row="3" HorizontalAlignment="Right" Height="20" Width="100"/>
+        <Button Content="Удалить" Name="Del" Grid.Row="3" HorizontalAlignment="Right" Height="20" Width="100" Click="DelEs"/>
     </Grid>
 </Window>

@@ -21,24 +21,24 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="Город" Grid.Column="0" Grid.Row="0"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="0" Name="first" Text="{Binding FirstName}"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="0" Name="city" Text="{Binding City}"/>
 
 
         <TextBlock Text="Улица" Grid.Column="0" Grid.Row="1"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="1" Name="last" Text="{Binding LastName}"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="1" Name="street" Text="{Binding Street}"/>
 
         <TextBlock Text="Номер дома" Grid.Column="0" Grid.Row="2"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="2" Name="patronym" Text="{Binding Patronymic}"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="2" Name="home" Text="{Binding Number_home}"/>
 
         <TextBlock Text="Номер квартиры" Grid.Column="0" Grid.Row="3"/>
-        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="3" Name="share" Text="{Binding DealShare}"/>
+        <TextBox Width="300" Height="20" Grid.Column="1" Grid.Row="3" Name="flat" Text="{Binding Number_flat}"/>
 
         <TextBlock Text="Район" Grid.Column="0" Grid.Row="4"/>
         <ComboBox Grid.Column="1" Grid.Row="4" Width="130" Height="25" Name="Dist" ItemsSource="{Binding NameDist}"/>
 
         <TextBlock Text="Тип недвижимости" Grid.Column="0" Grid.Row="5"/>
-        <ComboBox Grid.Column="1" Grid.Row="5" Width="130" Height="25" Name="Typ" ItemsSource="{Binding Name}"/>
-        <Button Content="Добавить" Grid.Column="1" Grid.Row="6" Width="100"  Margin="10" Visibility="Hidden" Name="Add" Click="AddAg"/>
-        <Button Content="Сохранить" Grid.Column="1" Grid.Row="6" Width="100"  Margin="10" Visibility="Hidden" Name="Edit" Click="EditAg"/>
+        <ComboBox Grid.Column="1" Grid.Row="5" Width="130" Height="25" Name="type" ItemsSource="{Binding Name}"/>
+        <Button Content="Добавить" Grid.Column="1" Grid.Row="6" Width="100"  Margin="10" Visibility="Hidden" Name="Add" Click="AddEs"/>
+        <Button Content="Сохранить" Grid.Column="1" Grid.Row="6" Width="100"  Margin="10" Visibility="Hidden" Name="Edit" Click="EditEs"/>
     </Grid>
 </Window>

@@ -30,93 +30,51 @@ namespace PractikaEstates
             DataContext = _currentDistrict;
             DataContext = _currentType;
             EstateGrid.ItemsSource = EstateEntities.GetContext().EstateObj.ToList();
-            List<int> districts=new List<int>();
-            List<string> nameDist = new List<string>();
-            District district1;
-            List<int> types = new List<int>();
-            List<string> nameTypes = new List<string>();
-            TypeOfEstate type1;
-            //string district2="";
-            using (EstateEntities context = new EstateEntities())
-            {
-                foreach (var estateObj in EstateEntities.GetContext().EstateObj.ToList())
-                {
-                    if (context.District.FirstOrDefault(d => d.Id_district == estateObj.id_district) != null)
-                        districts.Add((int)estateObj.id_district);
-                    else districts.Add(0);
-                    if (context.TypeOfEstate.FirstOrDefault(d => d.Id_type == estateObj.Id_type) != null)
-                        types.Add((int)estateObj.Id_type);
-                    else types.Add(0);
-                }
-                foreach (var district in districts)
-                {
-                    if (context.District.Where(d => d.Id_district == district) != null)
-                    {
-                        if (district == 0)
-                        {
-                            nameDist.Add("Нет");
-                        }
-                        else
-                        {
-                            district1 = context.District.Where(c => c.Id_district == district).FirstOrDefault();
-                            nameDist.Add(district1.NameDist);
-                        }
-                    }
-                }
-                foreach (var type in types)
-                {
-                    if (context.TypeOfEstate.Where(d => d.Id_type == type) != null)
-                    {
-                        if (type == 0)
-                        {
-                            nameTypes.Add("Нет");
-                        }
-                        else
-                        {
-                            type1 = context.TypeOfEstate.Where(c => c.Id_type == type).FirstOrDefault();
-                            nameTypes.Add(type1.Name);
-                        }
-                    }
-                }
-            }
-            DistrictGrid.ItemsSource = nameDist;
-            TypeGrid.ItemsSource = nameTypes;
+           
         }
         void StrEdit(object sender, RoutedEventArgs e)
         {
-            var item = (EstateObj)EstateGrid.SelectedItem; new EditEstate(item).Show();
+            // (EstateObj)
+            //int itemIndex = TypeGrid.SelectedIndex;
+            //var item = (EstateObj)EstateGrid.Items[itemIndex];
+            var item = (EstateObj)EstateGrid.SelectedItem; 
+            new EditEstate(item).Show();
             Close();
 
         }
-        private void EstateGrid_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        void AddEs(object sender, RoutedEventArgs e)
         {
-            if (e.VerticalChange != 0)
+            EditEstate es=new EditEstate();
+            es.Show();
+            this.Close();
+
+        }
+        void DelEs(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = EstateGrid.SelectedItem;
+            var estate = (EstateObj)selectedItem;
+            using (EstateEntities context = new EstateEntities())
             {
-                ScrollViewer scrollViewer = GetScrollViewer(EstateGrid);
-                ScrollViewer scrollViewer2 = GetScrollViewer(DistrictGrid);
-                if (scrollViewer != null)
+
+                var entity = context.EstateObj.Find(estate.Id_estate);
+                if (entity != null)
                 {
-                    scrollViewer.ScrollToVerticalOffset(e.VerticalOffset);
-                    scrollViewer2.ScrollToVerticalOffset(e.VerticalOffset);
+                   // var demandForClient = context.Demand.FirstOrDefault(d => d.Id_client == entity.Id_estate);
+                    var supplyForClient = context.Supplies.FirstOrDefault(d => d.Id_client == entity.Id_estate);
+                    if ( supplyForClient == null)
+                    {
+                        context.EstateObj.Remove(entity);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Невозможно удалить объект, он связан с предложением");
+                    }
                 }
             }
-        }
-        private ScrollViewer GetScrollViewer(DependencyObject depObj)
-        {
-            if (depObj is ScrollViewer scrollViewer)
-            {
-                return scrollViewer;
-            }
-
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-            {
-                var child = VisualTreeHelper.GetChild(depObj, i);
-                var result = GetScrollViewer(child);
-                if (result != null)
-                    return result;
-            }
-            return null;
-        }
+            Estates mainWindow = new Estates();
+            mainWindow.Show();
+    }
         void ClientClick(object sender, RoutedEventArgs e)
         {
             MainWindow clients = new MainWindow();
