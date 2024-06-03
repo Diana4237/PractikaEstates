@@ -83,7 +83,6 @@ namespace PractikaEstates
         }
         void AgentClick(object sender, RoutedEventArgs e)
         {
-
             Agents agents = new Agents();
             agents.Show();
             this.Close();

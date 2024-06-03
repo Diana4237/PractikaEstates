@@ -44,7 +44,13 @@ namespace PractikaEstates
             _currentClient = entity;
             DataContext = _currentClient;
         }
-       private void EditCl(object sender, RoutedEventArgs e)
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            MainWindow agents = new MainWindow();
+            agents.Show();
+            this.Close();
+        }
+        private void EditCl(object sender, RoutedEventArgs e)
         {
             //using (EstateEntities context = new EstateEntities())
             //{

@@ -44,6 +44,12 @@ namespace PractikaEstates
             }
                 Add.Visibility = Visibility.Visible;
         }
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            Estates agents = new Estates();
+            agents.Show();
+            this.Close();
+        }
         public EditEstate(EstateObj entity)
         {
             InitializeComponent();
