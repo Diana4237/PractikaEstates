@@ -135,6 +135,19 @@ namespace PractikaEstates
             agents.Show();
             this.Close();
         }
+        void SuppliesClick(object sender, RoutedEventArgs e)
+        {
+            Supply agent = new Supply();
+            agent.Show();
+            this.Close();
+        }
+
+        void DemandClick(object sender, RoutedEventArgs e)
+        {
+            Demands agent = new Demands();
+            agent.Show();
+            this.Close();
+        }
         void AddClient(object sender, RoutedEventArgs e)
         {
             EditClient editClient = new EditClient();

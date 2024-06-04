@@ -7,35 +7,44 @@
         mc:Ignorable="d"
         Title="Estates" Height="450" Width="800">
     <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#0091EA"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
         <Style TargetType="ComboBox">
             <Setter Property="Width" Value="20"/>
             <Setter Property="Height" Value="15"/>
         </Style>
         <Style TargetType="StackPanel">
             <Setter Property="Margin" Value="5,10,5,10"/>
+            <Setter Property="Background" Value="AliceBlue"/>
+        </Style>
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="White"/>
         </Style>
         <Style TargetType="MenuItem">
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="Gray" />
             <Setter Property="Margin" Value="2"/>
-            <!--<Setter Property="Str"/>-->
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="LightSkyBlue"/>
+            <Setter Property="Background" Value="#0091EA"/>
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="back2.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
-        <Menu Background="LightSkyBlue" Height="50">
+        <Menu Height="50">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
                     <DockPanel />
@@ -43,8 +52,8 @@
             </Menu.ItemsPanel>
             <MenuItem Header="Клиенты" Click="ClientClick" />
             <MenuItem Header="Риэлторы" Click="AgentClick" />
-            <MenuItem Header="Объекты недвижимости" />
-            <MenuItem Header="Предложение"/>
+            <MenuItem Header="Объекты недвижимости" Foreground="Black" BorderBrush="#0091EA" BorderThickness="0,0,0,3"/>
+            <MenuItem Header="Предложение" />
             <MenuItem Header="Потребность"/>
             <MenuItem Header="Сделки"/>
             <MenuItem Width="80" HorizontalAlignment="Right">
@@ -101,7 +110,7 @@
                     <DataGridTextColumn Header="Номер дома" Binding="{Binding Number_home}"/>
                     <DataGridTextColumn Header="Номер квартиры" Binding="{Binding Number_flat}"/>
                     <DataGridTextColumn Header="Район" Binding="{Binding District.NameDist}"/>
-                    <DataGridTextColumn Header="Район" Binding="{Binding TypeOfEstate.Name}"/>
+                    <DataGridTextColumn Header="Тип" Binding="{Binding TypeOfEstate.Name}"/>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

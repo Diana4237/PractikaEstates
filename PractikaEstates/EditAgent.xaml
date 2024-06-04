@@ -15,17 +15,20 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="LightSkyBlue"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="Margin" Value="10"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="LightSkyBlue"/>
+            <Setter Property="Background" Value="#0091EA"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </Window.Resources>
     <DockPanel>
+        <DockPanel.Background>
+            <ImageBrush ImageSource="Back3.jpg"/>
+        </DockPanel.Background>
         <Button DockPanel.Dock="Top" Content="Назад" Width="70" HorizontalAlignment="Left" Click="Back"/>
         <Grid DockPanel.Dock="Top" Margin="50">
         <Grid.ColumnDefinitions>
