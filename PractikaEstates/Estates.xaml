@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="Estates" Height="450" Width="800">
     <Window.Resources>
+        <Style TargetType="TextBox">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" 
+                            Value="3"/>
+                </Style>
+            </Style.Resources>
+        </Style>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="#0091EA"/>
             <Setter Property="FontSize" Value="12"/>
@@ -18,7 +26,7 @@
         </Style>
         <Style TargetType="StackPanel">
             <Setter Property="Margin" Value="5,10,5,10"/>
-            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="Background" Value="White"/>
         </Style>
         <Style TargetType="Menu">
             <Setter Property="Background" Value="White"/>
@@ -30,17 +38,37 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#0091EA"/>
+            <Setter Property="Height" Value="24"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#04A0FF"/>
+
+                                <Setter Property="Foreground" Value="DarkGray"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#0081D1"/>
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="back2.jpg"/>
-        </Grid.Background>
+       
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*"/>
             <RowDefinition Height="0.2*"/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="65"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
@@ -53,9 +81,9 @@
             <MenuItem Header="Клиенты" Click="ClientClick" />
             <MenuItem Header="Риэлторы" Click="AgentClick" />
             <MenuItem Header="Объекты недвижимости" Foreground="Black" BorderBrush="#0091EA" BorderThickness="0,0,0,3"/>
-            <MenuItem Header="Предложение" />
-            <MenuItem Header="Потребность"/>
-            <MenuItem Header="Сделки"/>
+            <MenuItem Header="Предложение" Click="SuppliesClick"/>
+            <MenuItem Header="Потребность" Click="DemandClick"/>
+            <MenuItem Header="Сделки" Click="DealsClick" />
             <MenuItem Width="80" HorizontalAlignment="Right">
                 <MenuItem.Background>
                     <ImageBrush ImageSource="logo.JPG"/>
@@ -74,31 +102,43 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
             <Label Content="Тип недвижимости:"/>
-            <ComboBox ItemsSource="{Binding Name}" Name="ComboboxType"/>
+            <ComboBox ItemsSource="{Binding Name}" Name="ComboboxType" SelectionChanged="SelectType"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <Label Content="Город:"/>
-                <ComboBox ItemsSource="{Binding City}" Name="ComboboxCity"/>
+                <ComboBox ItemsSource="{Binding City}" Name="ComboboxCity" SelectionChanged="SelectCity"/>
             </StackPanel>
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 <Label Content="Улица:"/>
-                <ComboBox ItemsSource="{Binding Street}" Name="ComboboxStreet"/>
+                <ComboBox ItemsSource="{Binding Street}" Name="ComboboxStreet" SelectionChanged="SelectStreet"/>
             </StackPanel>
             <StackPanel Grid.Column="3" Orientation="Horizontal">
                 <Label Content="Дом:"/>
-                <ComboBox ItemsSource="{Binding Number_home}" Name="ComboboxHome"/>
+                <ComboBox ItemsSource="{Binding Number_home}" Name="ComboboxHome" SelectionChanged="SelectHome"/>
             </StackPanel>
             <StackPanel Grid.Column="4" Orientation="Horizontal">
                 <Label Content="Квартира:"/>
-                <ComboBox ItemsSource="{Binding Number_flat}" Name="ComboboxFlat"/>
+                <ComboBox ItemsSource="{Binding Number_flat}" Name="ComboboxFlat" SelectionChanged="SelectFlat"/>
             </StackPanel>
             <StackPanel Grid.Column="5" Orientation="Horizontal">
                 <Label Content="Район:"/>
-                <ComboBox ItemsSource="{Binding NameDist}" Name="ComboboxDistrict"/>
+                <ComboBox ItemsSource="{Binding NameDist}" Name="ComboboxDistrict" SelectionChanged="SelectDist"/>
             </StackPanel>
-            <Button Grid.Column="6" HorizontalAlignment="Stretch" Content="Фильтр" Height="30" Width="90"/>
+            <Button Grid.Column="6" HorizontalAlignment="Stretch" Content="Сброс" Width="90" Click="clearStack" />
         </Grid>
-        <Grid Grid.Row="2">
+        <StackPanel Grid.Row="2" Name="tags" Orientation="Horizontal" HorizontalAlignment="Left">
+            <!--<Border BorderBrush="#00D988" BorderThickness="1" CornerRadius="3" Width="NaN" MaxWidth="150" Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Серва" />
+                    <Button  Width="10" Height="10" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="out.png" />
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+            </Border>-->
+        </StackPanel>
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -120,26 +160,10 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <!--<DataGrid Name="DistrictGrid" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True">
-                <DataGrid.Resources>
-                    <Style TargetType="ScrollViewer">
-                        <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
-                        <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Район" Binding="{Binding}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid Name="TypeGrid" Grid.Column="2" AutoGenerateColumns="False" IsReadOnly="True" ScrollViewer.ScrollChanged="EstateGrid_ScrollChanged">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Тип недвижимости" Binding="{Binding}"/>
-                  
-                </DataGrid.Columns>
-            </DataGrid>-->
+           
         </Grid>
-        <Button Content="Добавить" Name="Add" Grid.Row="3" HorizontalAlignment="Left" Height="30" Width="100" Click="AddEs"/>
+        <Button Content="Добавить" Name="Add" Grid.Row="4" HorizontalAlignment="Left" Width="100" Click="AddEs"/>
 
-        <Button Content="Удалить" Name="Del" Grid.Row="3" HorizontalAlignment="Right" Height="30" Width="100" Click="DelEs"/>
+        <Button Content="Удалить" Name="Del" Grid.Row="4" HorizontalAlignment="Right" Width="100" Click="DelEs"/>
     </Grid>
 </Window>

@@ -73,6 +73,9 @@
     <Compile Include="Client.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="DealsWindow.xaml.cs">
+      <DependentUpon>DealsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demand.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -96,6 +99,9 @@
     </Compile>
     <Compile Include="EditClient.xaml.cs">
       <DependentUpon>EditClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditDeal.xaml.cs">
+      <DependentUpon>EditDeal.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditDemand.xaml.cs">
       <DependentUpon>EditDemand.xaml</DependentUpon>
@@ -133,6 +139,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DealsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Demands.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -142,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditDeal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,10 +237,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="out.png" />
     <Resource Include="logo.JPG" />
-    <Resource Include="back2.JPG" />
-    <Resource Include="back.jpg" />
-    <Resource Include="Back3.jpg" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>

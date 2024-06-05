@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -73,28 +74,42 @@ namespace PractikaEstates
         }
         void DelDemand(object sender, RoutedEventArgs e)
         {
+            bool flag=false;
             var selectedItem = DemandGrid.SelectedItem;
-            var demand = (Demand)selectedItem;
-            //using (EstateEntities context = new EstateEntities())
-            //{
+            var demands = (Demand)selectedItem;
 
-            //    var entity = context.Supplies.Find(supply.Id_supply);
-            //    if (entity != null)
-            //    {
-            //        var deals = context.Deals.FirstOrDefault(d => d.Id_supply == entity.Id_supply);
+            using (var context = new EstateEntities())
+            {
+                var query = from supplies in context.Supplies
+                            from demand in supplies.Demand
+                            select new
+                            {
+                                supplyName = supplies.Id_supply,
+                                demandName = demand.Id_demand
+                            };
+                foreach (var result in query)
+                {
+                    if(result.demandName != demands.Id_demand)
+                    {
+                       flag= true; 
+                    }
+                    else
+                    {
+                        MessageBox.Show("Невозможно удалить потребность, он связан со сделкой");
+                    }
+                }
 
-            //        if (deals == null )
-            //        {
-            //            context.Supplies.Remove(entity);
-            //            context.SaveChanges();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Невозможно удалить агента, он связан с потребностью или предложением");
-            //        }
-            //    }
-            //}
-            Agents mainWindow = new Agents();
+            }
+            using (EstateEntities context = new EstateEntities())
+            {
+                if(flag)
+                { 
+                var entity = context.Demand.Find(demands.Id_demand);
+                context.Demand.Remove(entity);
+                context.SaveChanges();
+                }
+            }
+                Demands mainWindow = new Demands();
             mainWindow.Show();
         }
 

@@ -93,6 +93,11 @@ namespace PractikaEstates
             }
             return results;
         }
+        void DealsClick(object sender, RoutedEventArgs e)
+        {
+            DealsWindow dealsWindow = new DealsWindow();
+            dealsWindow.Show();
+        }
         private int LevenshteinDistance(string s, string t)
         {
             int n = s.Length;

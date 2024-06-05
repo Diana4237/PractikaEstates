@@ -116,6 +116,24 @@ namespace PractikaEstates
             Close();
 
         }
+        void DealsClick(object sender, RoutedEventArgs e)
+        {
+            DealsWindow dealsWindow = new DealsWindow();
+            dealsWindow.Show();
+        }
+        void SuppliesClick(object sender, RoutedEventArgs e)
+        {
+            Supply agent = new Supply();
+            agent.Show();
+            this.Close();
+        }
+
+        void DemandClick(object sender, RoutedEventArgs e)
+        {
+            Demands agent = new Demands();
+            agent.Show();
+            this.Close();
+        }
         void ClientClick(object sender, RoutedEventArgs e)
         {
             MainWindow clients = new MainWindow();

@@ -72,29 +72,43 @@ namespace PractikaEstates
         }
         void DelSupply(object sender, RoutedEventArgs e)
         {
-            //var selectedItem = SupplyGrid.SelectedItem;
-            //var supply = (Supplies)selectedItem;
-            //using (EstateEntities context = new EstateEntities())
-            //{
+            bool flag = false;
+            var selectedItem = SupplyGrid.SelectedItem;
+            var suppls = (Supplies)selectedItem;
 
-            //    var entity = context.Supplies.Find(supply.Id_supply);
-            //    if (entity != null)
-            //    {
-            //        var deals = context.Deals.FirstOrDefault(d => d.Id_supply == entity.Id_supply);
+            using (var context = new EstateEntities())
+            {
+                var query = from supplies in context.Supplies
+                            from demand in supplies.Demand
+                            select new
+                            {
+                                supplyName = supplies.Id_supply,
+                                demandName = demand.Id_demand
+                            };
+                foreach (var result in query)
+                {
+                    if (result.supplyName != suppls.Id_supply)
+                    {
+                        flag = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Невозможно удалить предложение, он связан со сделкой");
+                    }
+                }
 
-            //        if (deals == null)
-            //        {
-            //            context.Supplies.Remove(entity);
-            //            context.SaveChanges();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Невозможно удалить агента, он связан с потребностью или предложением");
-            //        }
-            //    }
-            //}
-            //Agents mainWindow = new Agents();
-            //mainWindow.Show();
+            }
+            using (EstateEntities context = new EstateEntities())
+            {
+                if (flag)
+                {
+                    var entity = context.Supplies.Find(suppls.Id_supply);
+                    context.Supplies.Remove(entity);
+                    context.SaveChanges();
+                }
+            }
+            Supply mainWindow = new Supply();
+            mainWindow.Show();
         }
 
     }

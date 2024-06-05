@@ -18,14 +18,33 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#0091EA"/>
+            <Setter Property="Height" Value="24"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#04A0FF"/>
+
+                                <Setter Property="Foreground" Value="DarkGray"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#0081D1"/>
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="back2.jpg"/>
-        </Grid.Background>
+       
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
@@ -74,8 +93,8 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Content="Добавить" Name="Add" Click="AddSupply"  Grid.Row="3" HorizontalAlignment="Left" Height="30" Width="100"/>
+        <Button Content="Добавить" Name="Add" Click="AddSupply"  Grid.Row="3" HorizontalAlignment="Left" Width="100"/>
 
-        <Button Content="Удалить" Name="Del" Click="DelSupply" Grid.Row="3" HorizontalAlignment="Right" Height="30" Width="100"/>
+        <Button Content="Удалить" Name="Del" Click="DelSupply" Grid.Row="3" HorizontalAlignment="Right" Width="100"/>
     </Grid>
 </Window>
