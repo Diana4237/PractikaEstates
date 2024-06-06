@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,12 +24,18 @@ namespace PractikaEstates
         public DealsWindow()
         {
             InitializeComponent();
+            LoadData();
+        }
+        void LoadData()
+        {
             using (var context = new EstateEntities())
             {
                 var query = from supplies in context.Supplies
                             from demand in supplies.Demand
                             select new
                             {
+                                SupplyId = supplies.Id_supply,
+                                DemandId = demand.Id_demand,
                                 supplyName = supplies.Id_supply,
                                 demandName = demand.Id_demand
                             };
@@ -71,42 +78,37 @@ namespace PractikaEstates
             EditDeal editClient = new EditDeal();
             editClient.Show();
         }
-        void DelClient(object sender, RoutedEventArgs e)
+        void Delete(object sender, RoutedEventArgs e)
         {
-            var selectedItem = DealsGrid.SelectedItem;
-            using (var context = new EstateEntities())
-            {
-                var query = from supplies in context.Supplies
-                            from demand in supplies.Demand
-                            select new
-                            {
-                                supplyName = supplies.Id_supply,
-                                demandName = demand.Id_demand
-                            };
-            }
-            
-            var client = (Agent)selectedItem;
-            using (EstateEntities context = new EstateEntities())
-            {
+            var button = sender as Button;
+            var dataContext = button?.DataContext;
 
-                var entity = context.Agent.Find(client.Id_agent);
-                if (entity != null)
+            if (dataContext != null)
+            {
+                dynamic item = dataContext;
+                int supplyId = item.SupplyId;
+                int demandId = item.DemandId;
+
+                using (var context = new EstateEntities())
                 {
-                    var demandForClient = context.Demand.FirstOrDefault(d => d.Id_agent == entity.Id_agent);
-                    var supplyForClient = context.Supplies.FirstOrDefault(d => d.Id_agent == entity.Id_agent);
-                    if (demandForClient == null || supplyForClient == null)
+                    var supply = context.Supplies.Include("Demand").FirstOrDefault(u => u.Id_supply == supplyId);
+                    if (supply != null)
                     {
-                        context.Agent.Remove(entity);
-                        context.SaveChanges();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Невозможно удалить агента, он связан с потребностью или предложением");
+                        var demand = supply.Demand.FirstOrDefault(c => c.Id_demand == demandId);
+                        if (demand != null)
+                        {
+                            supply.Demand.Remove(demand);
+                            context.SaveChanges();
+                            LoadData();
+                        }
                     }
                 }
             }
-            Agents mainWindow = new Agents();
-            mainWindow.Show();
+        }
+        void Upload(object sender, RoutedEventArgs e)
+        {
+            EditDeal editClient = new EditDeal();
+            editClient.Show();
         }
     }
 }

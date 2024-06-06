@@ -6,7 +6,73 @@
         xmlns:local="clr-namespace:PractikaEstates"
         mc:Ignorable="d"
         Title="EditDeal" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="400"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" 
+                            Value="3"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#0091EA"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#04A0FF"/>
+
+                                <Setter Property="Foreground" Value="DarkGray"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#0081D1"/>
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+
+        <Button DockPanel.Dock="Top" Content="Назад" Width="70" HorizontalAlignment="Left" Click="Back"/>
+        <Grid DockPanel.Dock="Top" Margin="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Идентификатор предложения" Grid.Column="0" Grid.Row="0"/>
+            <ComboBox Grid.Column="1" Grid.Row="0" Width="130" Height="25" Name="Sup" ItemsSource="{Binding supplyName}"/>
+
+            <TextBlock Text="Идентификатор потребности" Grid.Column="0" Grid.Row="1"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" Width="130" Height="25" Name="Dem" ItemsSource="{Binding demandName}"/>
+
+
+            <Button Content="Добавить" Grid.Column="1" Grid.Row="2" Width="100"  Margin="5" Visibility="Hidden" Name="Add" Click="AddSup"/>
+            <Button Content="Сохранить" Grid.Column="1" Grid.Row="2" Width="100" Margin="5" Visibility="Hidden" Name="Edit" Click="EditSup"/>
+        </Grid>
+    </DockPanel>
 </Window>

@@ -47,7 +47,6 @@
        
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*"/>
-            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
@@ -77,7 +76,7 @@
 
 
         </Grid>
-        <DataGrid Name="SupplyGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="2" Margin="10" HorizontalAlignment="Center">
+        <DataGrid Name="SupplyGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1" Margin="10" HorizontalAlignment="Center">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
                 <DataGridTextColumn Header="Клиент" Binding="{Binding Id_client}"/>
@@ -93,8 +92,8 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Content="Добавить" Name="Add" Click="AddSupply"  Grid.Row="3" HorizontalAlignment="Left" Width="100"/>
+        <Button Content="Добавить" Name="Add" Click="AddSupply"  Grid.Row="2" HorizontalAlignment="Left" Width="100"/>
 
-        <Button Content="Удалить" Name="Del" Click="DelSupply" Grid.Row="3" HorizontalAlignment="Right" Width="100"/>
+        <Button Content="Удалить" Name="Del" Click="DelSupply" Grid.Row="2" HorizontalAlignment="Right" Width="100"/>
     </Grid>
 </Window>

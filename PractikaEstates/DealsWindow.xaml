@@ -74,11 +74,28 @@
                 </MenuItem.Background>
             </MenuItem>
         </Menu>
-        <DataGrid Name="DealsGrid" AutoGenerateColumns="true" IsReadOnly="True" Grid.Row="1" HorizontalAlignment="Center" Width="300">
-
+        <DataGrid Name="DealsGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1" HorizontalAlignment="Center" Width="300">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Предложение" Binding="{Binding  supplyName}" />
+                <DataGridTextColumn Header="Потребность" Binding="{Binding demandName}" />
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить" Click="Delete"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Изменить" Click="Upload"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Добавить" Name="Add" Click="AddClient"  Grid.Row="2" HorizontalAlignment="Left" Width="100"/>
+        <Button Content="Добавить" Name="Add" Click="AddClient"  Grid.Row="2" HorizontalAlignment="Center" Width="100"/>
 
-        <Button Content="Удалить" Name="Del" Click="DelClient" Grid.Row="2" HorizontalAlignment="Right"  Width="100"/>
+        
     </Grid>
 </Window>
