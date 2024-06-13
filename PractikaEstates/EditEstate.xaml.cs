@@ -85,8 +85,10 @@ namespace PractikaEstates
             {
                 var entity = context.EstateObj.Find(IdEs);
                 District Distr = (District)context.District.FirstOrDefault(c => c.NameDist == Dist.SelectedItem);
+                if (Distr != null) 
                 entity.id_district = Distr.Id_district;
                 TypeOfEstate TypeEs = (TypeOfEstate)context.TypeOfEstate.FirstOrDefault(c => c.Name == type.SelectedItem);
+                if(TypeEs!=null)
                 entity.Id_type = TypeEs.Id_type;
                 if(entity.Id_type != null) 
                 { 
@@ -100,12 +102,24 @@ namespace PractikaEstates
         }
         private void AddEs(object sender, RoutedEventArgs e)
         {
+            List<EstateObj> ag = EstateEntities.GetContext().EstateObj.ToList();
+            List<int> idAgents = new List<int>();
+            foreach (EstateObj agent in ag)
+            {
+                idAgents.Add(agent.Id_estate);
+            }
+            int randomId;
+            do
+            {
+                randomId = new Random().Next();
+            } while (idAgents.Contains(randomId));
             using (EstateEntities context = new EstateEntities())
             {
                 District Distr = (District)context.District.FirstOrDefault(c => c.NameDist == Dist.SelectedItem);
                 TypeOfEstate TypeEs = (TypeOfEstate)context.TypeOfEstate.FirstOrDefault(c => c.Name == type.SelectedItem);
                 EstateObj entity = new EstateObj
                  {
+                    Id_estate = randomId,
                         City = city.Text,
                         Street = street.Text,
                         Number_home = Convert.ToInt32(home.Text),

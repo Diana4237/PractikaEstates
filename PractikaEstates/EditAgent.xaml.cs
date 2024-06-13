@@ -60,11 +60,23 @@ namespace PractikaEstates
         {
             using (EstateEntities context = new EstateEntities())
             {
+                List<Agent> ag = EstateEntities.GetContext().Agent.ToList();
+                List<int> idAgents= new List<int>();
+                foreach (Agent agent in ag)
+                {
+                    idAgents.Add(agent.Id_agent);
+                }
+                int randomId;
+                do
+                {
+                    randomId = new Random().Next();
+                } while (idAgents.Contains(randomId));
                 int integer;
                 if (first.Text != null && last.Text != null && patronym.Text!=null && int.TryParse(share.Text,out integer))
                 {
                     Agent entity = new Agent
                     {
+                        Id_agent=randomId,
                         FirstName = first.Text,
                         LastName = last.Text,
                         Patronymic = patronym.Text,

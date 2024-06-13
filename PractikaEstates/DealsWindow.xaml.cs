@@ -107,8 +107,17 @@ namespace PractikaEstates
         }
         void Upload(object sender, RoutedEventArgs e)
         {
-            EditDeal editClient = new EditDeal();
-            editClient.Show();
+            var button = sender as Button;
+            var dataContext = button?.DataContext;
+
+            if (dataContext != null)
+            {
+                dynamic item = dataContext;
+                int supplyId = item.SupplyId;
+                int demandId = item.DemandId;
+                EditDeal editClient = new EditDeal(supplyId, demandId);
+                editClient.Show();
+            }
         }
     }
 }

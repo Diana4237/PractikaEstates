@@ -43,11 +43,30 @@ namespace PractikaEstates
                 listEstate.Add(item.Id_type.ToString());
             }
 
+            List<string> listland = new List<string>();
+            foreach (var item in EstateEntities.GetContext().DemandOfLand.ToList())
+            {
+                listland.Add(item.Id_demandLand.ToString());
+            }
 
+            List<string> listflat = new List<string>();
+            foreach (var item in EstateEntities.GetContext().DemandOfFlat.ToList())
+            {
+                listflat.Add(item.Id_demandFlat.ToString());
+            }
+
+            List<string> listhouse = new List<string>();
+            foreach (var item in EstateEntities.GetContext().DemandOfHouse.ToList())
+            {
+                listhouse.Add(item.Id_demandHouse.ToString());
+            }
 
             Client.ItemsSource = listClient;
             Agent1.ItemsSource = listAgent;
             Estate1.ItemsSource = listEstate;
+            land.ItemsSource = listland;
+            house.ItemsSource = listhouse;
+            flat.ItemsSource = listflat;
 
 
             DataContext = _currentSupp;
@@ -60,6 +79,26 @@ namespace PractikaEstates
         }
         private void EditDem(object sender, RoutedEventArgs e)
         {
+            using (EstateEntities context = new EstateEntities())
+            {
+                var entity = context.Demand.Find(IdDem);
+                entity.MinPrice = int.Parse(PriceMin.Text);
+                entity.MaxPrice = int.Parse(PriceMax.Text);
+                entity.Id_client = (string)Client.SelectedItem != null ? int.Parse((string)Client.SelectedItem) : (int?)null;
+                entity.Id_agent = (string)Agent1.SelectedItem != null ? int.Parse((string)Agent1.SelectedItem) : (int?)null;
+                entity.Id_type = (string)Estate1.SelectedItem != null ? int.Parse((string)Estate1.SelectedItem) : (int?)null;
+                entity.Adress = adress.Text;
+                entity.Id_demand_flat = (string)flat.SelectedItem != null ? int.Parse((string)flat.SelectedItem) : (int?)null;
+                entity.Id_demand_land = (string)land.SelectedItem != null ? int.Parse((string)land.SelectedItem) : (int?)null;
+                entity.Id_demand_house = (string)house.SelectedItem != null ? int.Parse((string)house.SelectedItem) : (int?)null;
+
+                context.SaveChanges();
+
+            }
+
+            EstateEntities.GetContext().SaveChanges();
+            new Supply().Show();
+            Close();
         }
         public EditDemand(Demand entity)
         {
@@ -128,7 +167,18 @@ namespace PractikaEstates
             using (EstateEntities context = new EstateEntities())
             {
                 int integer;
-                if (Client.SelectedItem != null && Agent1.SelectedItem != null && Estate1.SelectedItem != null && PriceMin.Text != null && PriceMax != null && adress.Text != null && house.SelectedItem != null && land.SelectedItem != null && flat.SelectedItem != null)
+
+                string selectedLand = (string)land.SelectedItem;
+                int? idDemandLand = selectedLand != null ? int.Parse(selectedLand) : (int?)null;
+
+                string selectedFlat = (string)flat.SelectedItem;
+                int? idDemandFlat = selectedFlat != null ? int.Parse(selectedFlat) : (int?)null;
+
+                string selectedHouse = (string)house.SelectedItem;
+                int? idDemandHouse = selectedHouse != null ? int.Parse(selectedHouse) : (int?)null;
+
+
+                if (Client.SelectedItem != null && Agent1.SelectedItem != null && Estate1.SelectedItem != null && PriceMin.Text != null && PriceMax != null && adress.Text != null && (house.SelectedItem != null || flat.SelectedItem != null))
                 {
                     Demand entity = new Demand
                     {
@@ -138,9 +188,9 @@ namespace PractikaEstates
                         Id_agent = int.Parse((string)Agent1.SelectedItem),
                         Id_type = int.Parse((string)Estate1.SelectedItem),
                         Adress = adress.Text,
-                        Id_demand_land = int.Parse((string)land.SelectedItem),
-                        Id_demand_flat = int.Parse((string)flat.SelectedItem),
-                        Id_demand_house = int.Parse((string)house.SelectedItem),
+                        Id_demand_land = idDemandLand,
+                        Id_demand_flat = idDemandFlat,
+                        Id_demand_house = idDemandHouse,
                     };
                     context.Demand.Add(entity);
                     context.SaveChanges();

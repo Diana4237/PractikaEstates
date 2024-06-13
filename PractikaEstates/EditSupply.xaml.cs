@@ -99,6 +99,22 @@ namespace PractikaEstates
         }
         private void EditSup(object sender, RoutedEventArgs e)
         {
+            using (EstateEntities context = new EstateEntities())
+            {
+                var entity = context.Supplies.Find(IdSup);
+                entity.Price = int.Parse(Price1.Text);
+                entity.Id_client = (string)Client1.SelectedItem != null ? int.Parse((string)Client1.SelectedItem) : (int?)null;
+                entity.Id_agent = (string)Agent1.SelectedItem != null ? int.Parse((string)Agent1.SelectedItem) : (int?)null;
+                entity.Id_estate = (string)Estate1.SelectedItem != null ? int.Parse((string)Estate1.SelectedItem) : (int?)null;
+
+
+                context.SaveChanges();
+
+            }
+
+            EstateEntities.GetContext().SaveChanges();
+            new Supply().Show();
+            Close();
         }
         private void AddSup(object sender, RoutedEventArgs e)
         {
